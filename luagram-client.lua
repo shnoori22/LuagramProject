@@ -13,6 +13,8 @@ local luagram = {
 
 VERSION : 1.3 / BETA]],
 luagram_helper = {
+      ['chat_type'] = ' function > app.chat_type(chat_id)',
+      ['all_chats'] = ' function > app.all_chats(chat_list)', 
       ['editInlineMessageText'] = ' function > app.editInlineMessageText(inline_message_id, input_message_content, reply_markup)',
       ['match'] = ' function > app.match(table)[value]',
       ['base64_encode'] = ' function > app.base64_encode(str)',
@@ -560,6 +562,54 @@ function luagram_function.cancel_timer(timer_id)
       luagram = false
     }
   end
+end
+
+function luagram_function.chat_type(chat_id)
+  local result = luagram_function.getChat(chat_id)
+  if result.type then
+    if result.type.luagram == 'chatTypeSupergroup' then
+      if result.type.is_channel then
+        value = 'is_channel'
+      else
+        value = 'is_supergroup'
+      end
+    elseif result.type.luagram == 'chatTypeBasicGriup' then
+      value = 'is_group'
+    elseif result.type.luagram == 'chatTypePrivate' then
+      value = 'is_private'
+    end
+  end
+  return value, result
+end
+
+ function luagram_function.all_chats(chat_list)
+  local result = {
+    group = {
+    },
+    channel = {
+    },
+    private = {
+    },
+    supergroup = {
+    }
+  }
+  repeat
+    local update = luagram_function.getChats(chat_list, result.offset_order, 0, 100)
+    for key, value in pairs(update.chat_ids) do
+      local chat_type, get_chat = luagram_function.chat_type(value)
+      result.offset_order = get_chat.order
+      if chat_type == 'is_channel' then
+        result.channel[#luagram_function + 1] = get_chat
+      elseif chat_type == 'is_supergroup' then
+        result.supergroup[#result.supergroup + 1] = get_chat
+      elseif chat_type == 'is_group' then
+        result.group[#result.group + 1)] = get_chat
+      elseif chat_type == 'is_private' then
+        result.private[#result.private + 1] = get_chat
+      end
+    end
+  until not update.chat_ids or #update.chat_ids < 100
+  return result
 end
 
 function luagram_function.replyMarkup(input)
