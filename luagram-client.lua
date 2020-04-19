@@ -609,6 +609,7 @@ end
       end
     end
   until not update.chat_ids or #update.chat_ids < 100
+  result.offset_order = nil
   return result
 end
 
