@@ -599,7 +599,7 @@ end
       local chat_type, get_chat = luagram_function.chat_type(value)
       result.offset_order = get_chat.order
       if chat_type == 'is_channel' then
-        result.channel[#luagram_function + 1] = get_chat
+        result.channel[#result.channel + 1] = get_chat
       elseif chat_type == 'is_supergroup' then
         result.supergroup[#result.supergroup + 1] = get_chat
       elseif chat_type == 'is_group' then
