@@ -603,7 +603,7 @@ end
       elseif chat_type == 'is_supergroup' then
         result.supergroup[#result.supergroup + 1] = get_chat
       elseif chat_type == 'is_group' then
-        result.group[#result.group + 1)] = get_chat
+        result.group[#result.group + 1] = get_chat
       elseif chat_type == 'is_private' then
         result.private[#result.private + 1] = get_chat
       end
