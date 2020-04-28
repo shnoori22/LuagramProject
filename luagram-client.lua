@@ -229,7 +229,7 @@ luagram_helper = {
       ['sendInvoice'] = ' function > app.sendInvoice(chat_id, reply_to_message_id, invoice, title, description, photo_url, photo_size, photo_width, photo_height, payload, provider_token, provider_data, start_parameter, disable_notification, from_background, reply_markup)',
       ['sendForwarded'] = ' function > app.sendForwarded(chat_id, reply_to_message_id, from_chat_id, message_id, in_game_share, disable_notification, from_background, reply_markup)',
       ['sendPoll'] = ' function > app.sendPoll(chat_id, reply_to_message_id, question, options, pollType, is_anonymous, allow_multiple_answers)',
-      ['addProxy'] = ' function > app.addProxy(proxy_type, server, port, username, password_secret, http_only)',
+      ['addProxy'] = ' function > app.addProxy(proxy, server, port)',
       ['enableProxy'] = ' function > app.enableProxy(proxy_id)',
       ['pingProxy'] = ' function > app.pingProxy(proxy_id)',
       ['disableProxy'] = ' function > app.disableProxy(proxy_id)',
@@ -738,43 +738,23 @@ function luagram_function.replyMarkup(input)
     }
   end
 end
-function luagram_function.addProxy(proxy_type, server, port, username, password_secret, http_only)
-  if type(proxy_type) ~= 'string' then
-    return {
-    luagram = false
-    }
-  end
-  local proxy_type = string.lower(proxy_type)
-  if proxy_type == 'mtproto' then
-    _type_ = {
-      luagram = 'proxyTypeMtproto',
-      secret = password_secret
-    }
-  elseif proxy_Type == 'socks5' then
-    _type_ = {
-      luagram = 'proxyTypeSocks5',
-      username = username,
-      password = password_secret
-    }
-  elseif proxy_Type == 'http' then
-    _type_ = {
-      luagram = 'proxyTypeHttp',
-      username = username,
-      password = password_secret,
-      http_only = http_only
-    }
-  else
-    return {
-      luagram = false
-    }
-  end
+
+function luagram_function.addProxy(proxy, server, port)
+
+  -- {luagram = 'proxyTypeMtproto',secret = password_secret}
+
+  -- {luagram = 'proxyTypeSocks5', username = username, password = password_secret}
+
+  -- {luagram = 'proxyTypeHttp',username = username,password = password_secret,http_only = http_only}
+
   return function_core.run_table{
     luagram = 'addProxy',
     server = server,
     port = port,
-    type = _type_
+    type = proxy
   }
 end
+
 function luagram_function.enableProxy(proxy_id)
   return function_core.run_table{
    luagram = 'enableProxy',
