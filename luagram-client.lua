@@ -2817,6 +2817,7 @@ end
 function luagram_function.editInlineMessageText(inline_message_id, input_message_content, reply_markup)
   return function_core.run_table{
     luagram = 'editInlineMessageText',
+    inline_message_id = inline_message_id,
     input_message_content = luagram_function.getInputMessage(input_message_content),
     reply_markup = reply_markup
   }
