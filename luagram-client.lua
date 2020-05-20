@@ -573,7 +573,7 @@ function luagram_function.chat_type(chat_id)
       else
         value = 'is_supergroup'
       end
-    elseif result.type.luagram == 'chatTypeBasicGriup' then
+    elseif result.type.luagram == 'chatTypeBasicGroup' then
       value = 'is_group'
     elseif result.type.luagram == 'chatTypePrivate' then
       value = 'is_private'
