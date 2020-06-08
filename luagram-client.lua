@@ -349,7 +349,7 @@ function_core.send_tdlib{
   luagram = 'getAuthorizationState'
 }
 LuaGram.setLogLevel(3)
-LuaGram.setLogPath('/usr/lib/x86_64-linux-gnu/lua/5.3/.luagram.log')
+LuaGram.setLogPath('.luagram.log')
 -----------------------------------------------luagram_function
 function luagram_function.len(input)
   if type(input) == 'table' then
