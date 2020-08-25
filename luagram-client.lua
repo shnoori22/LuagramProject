@@ -935,6 +935,7 @@ function luagram_function.getPasswordState()
 end
 function luagram_function.setPassword(old_password, new_password, new_hint, set_recovery_email_address, new_recovery_email_address)
   return function_core.run_table{
+    luagram = 'setPassword',
     old_password = tostring(old_password),
     new_password = tostring(new_password),
     new_hint = tostring(new_hint),
@@ -1346,7 +1347,7 @@ function luagram_function.editMessageCaption(chat_id, message_id, caption, parse
     caption = caption
   }
   if parse_mode then
-      luagram_body.caption = luagram_function.parseTextEntities(text,parse_mode)
+      luagram_body.caption = luagram_function.parseTextEntities(caption,parse_mode)
   end
   return function_core.run_table(luagram_body)
 end
@@ -1535,7 +1536,7 @@ function luagram_function.setChatPhoto(chat_id, photo)
   return function_core.run_table{
     luagram = 'setChatPhoto',
     chat_id = chat_id,
-    photo = getInputFile(photo)
+    photo = luagram_function.getInputFile(photo)
   }
 end
 function luagram_function.setChatDraftMessage(chat_id, reply_to_message_id, text, parse_mode, disable_web_page_preview, clear_draft)
